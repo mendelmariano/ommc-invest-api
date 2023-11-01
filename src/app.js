@@ -1,6 +1,8 @@
 import express from 'express';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import cors from 'cors';
+
+import admin from 'firebase-admin';
 import routes from './routes';
 
 // Importando nossa database
@@ -26,6 +28,13 @@ class App {
 
         this.middlewares();
         this.routes();
+
+        // eslint-disable-next-line global-require
+        const serviceAccount = require('./config/firebaseConfigJs');
+        admin.initializeApp({
+            credential: admin.credential.cert(serviceAccount),
+            databaseURL: 'https://ommc-invest.firebaseapp.com', // Substitua pelo URL do seu projeto Firebase
+        });
     }
 
     middlewares() {

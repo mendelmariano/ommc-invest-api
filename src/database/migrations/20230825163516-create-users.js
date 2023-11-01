@@ -3,19 +3,23 @@ module.exports = {
     async up(queryInterface, Sequelize) {
         await queryInterface.createTable('users', {
             id: {
-                type: Sequelize.INTEGER,
-                allowNull: false,
-                autoIncrement: true,
+                type: Sequelize.UUID,
+                defaultValue: Sequelize.literal('gen_random_uuid()'), // Gera automaticamente um UUID
                 primaryKey: true,
             },
+
+            uuid: {
+                type: Sequelize.STRING,
+                allowNull: true,
+            },
+
             name: {
                 type: Sequelize.STRING,
                 allowNull: false,
             },
             whatsapp: {
                 type: Sequelize.STRING,
-                allowNull: false,
-                unique: true,
+                allowNull: true,
             },
             email: {
                 type: Sequelize.STRING,
@@ -24,7 +28,7 @@ module.exports = {
             },
             password_hash: {
                 type: Sequelize.STRING,
-                allowNull: false,
+                allowNull: true,
             },
             profile_id: {
                 type: Sequelize.INTEGER,
@@ -32,6 +36,7 @@ module.exports = {
                 onUpdate: 'CASCADE',
                 onDelete: 'CASCADE',
                 allowNull: false,
+                defaultValue: 1,
             },
             created_at: {
                 type: Sequelize.DATE,

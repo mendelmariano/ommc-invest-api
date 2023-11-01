@@ -180,18 +180,21 @@ class UserController {
                 return res.status(400).json({ error: 'Email já existe. ' });
             }
         }
-
-        // Verifica se a propriedade oldPassword existe na requisição e se ela confere com a senha do usuário
-        if (oldPassword && !(await user.checkPassword(oldPassword))) {
-            return res.status(400).json({ error: 'Senha incorreta. ' });
+        if (user.password_hash) {
+            if (oldPassword && !(await user.checkPassword(oldPassword))) {
+                return res.status(400).json({ error: 'Senha incorreta. ' });
+            }
         }
+        // Verifica se a propriedade oldPassword existe na requisição e se ela confere com a senha do usuário
 
         // Se password está definido, newPassword e confirmPassword também devem estar definidos
         if (password) {
-            if (!oldPassword) {
-                return res.status(400).json({
-                    error: 'A senha antiga é necessária para atualizar a senha. ',
-                });
+            if (user.password_hash) {
+                if (!oldPassword) {
+                    return res.status(400).json({
+                        error: 'A senha antiga é necessária para atualizar a senha. ',
+                    });
+                }
             }
 
             if (!confirmPassword) {
@@ -220,6 +223,59 @@ class UserController {
             email,
             whatsapp,
         });
+    }
+
+    async updateGoogle(req, res) {
+        const userExist = await User.findOne({
+            where: { email: req.body.email },
+        });
+
+        // Verifica se o email já existe na base de dados
+        if (!userExist) {
+            const { id } = await User.create(req.body);
+            const userCreated = await User.findOne({
+                where: [{ id }],
+                include: [
+                    {
+                        model: Profile,
+                        as: 'profile',
+                        attributes: ['name', 'id'],
+                    },
+                ],
+                attributes: [
+                    'id',
+                    'name',
+                    'email',
+                    'whatsapp',
+                    'profile_id',
+                    'createdAt',
+                    'updatedAt',
+                ],
+            });
+            return res.status(200).json(userCreated);
+        }
+
+        const { id } = await userExist.update(req.body);
+        const userEdited = await User.findOne({
+            where: [{ id }],
+            include: [
+                {
+                    model: Profile,
+                    as: 'profile',
+                    attributes: ['name', 'id'],
+                },
+            ],
+            attributes: [
+                'id',
+                'name',
+                'email',
+                'whatsapp',
+                'profile_id',
+                'createdAt',
+                'updatedAt',
+            ],
+        });
+        return res.json(userEdited);
     }
 
     async updateSomeone(req, res) {

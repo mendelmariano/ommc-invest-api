@@ -13,8 +13,10 @@ import ModeController from './app/controllers/ModeController';
 const routes = new Router();
 
 routes.post('/users', UserController.store);
-routes.delete('/users/:user_id', UserController.delete);
+routes.delete('/users/:id', UserController.delete);
 routes.post('/sessions', SessionController.store);
+routes.get('/sessions/google/:idToken', SessionController.storeGoogle);
+routes.put('/users/google/:id', UserController.updateGoogle);
 
 // Todas as rotas abaixo precisam estar autenticadas
 routes.use(authMiddleware);
