@@ -1,7 +1,6 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import Sequelize, { Model } from 'sequelize';
 
-class Mode extends Model {
+class Category extends Model {
     static init(sequelize) {
         super.init(
             {
@@ -15,9 +14,14 @@ class Mode extends Model {
     }
 
     static associate(models) {
-        this.hasMany(models.Team);
-        this.hasMany(models.Championship);
+        this.hasMany(models.Movement);
+        this.hasMany(models.Patrimony);
+        this.belongsTo(models.Type, {
+            foreignKey: 'type_id',
+            targetKey: 'id',
+            as: 'type',
+        });
     }
 }
 
-export default Mode;
+export default Category;

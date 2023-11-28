@@ -35,6 +35,9 @@ class User extends Model {
             targetKey: 'id',
             as: 'profile',
         });
+
+        this.hasMany(models.Movement);
+        this.hasMany(models.Patrimony);
     }
 
     checkPassword(password) {

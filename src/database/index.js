@@ -1,22 +1,13 @@
 import Sequelize from 'sequelize';
 import databaseConfig from '../config/database';
 import User from '../app/models/User';
-import Team from '../app/models/Team';
 import Profile from '../app/models/Profile';
-import Championship from '../app/models/Championship';
-import Classification from '../app/models/Classification';
-import Result from '../app/models/Result';
-import Mode from '../app/models/Mode';
+import Category from '../app/models/Category';
+import Movement from '../app/models/Movement';
+import Type from '../app/models/Type';
+import Patrimony from '../app/models/Patrimony';
 
-const models = [
-    Profile,
-    User,
-    Team,
-    Championship,
-    Classification,
-    Result,
-    Mode,
-];
+const models = [Profile, User, Category, Type, Movement, Patrimony];
 
 class Database {
     constructor() {
