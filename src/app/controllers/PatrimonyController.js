@@ -99,15 +99,7 @@ class PatrimonyController {
 
             const dateFilter = {};
 
-            if (startDate && endDate) {
-                dateFilter.data = {
-                    [Op.between]: [new Date(startDate), new Date(endDate)],
-                };
-            } else if (startDate) {
-                dateFilter.data = {
-                    [Op.gte]: new Date(startDate),
-                };
-            } else if (endDate) {
+            if (endDate) {
                 dateFilter.data = {
                     [Op.lte]: new Date(endDate),
                 };

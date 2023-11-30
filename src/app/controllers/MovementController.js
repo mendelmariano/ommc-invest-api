@@ -59,7 +59,7 @@ class MovementController {
     }
 
     async indexStartPeriod(req, res) {
-        const { startDate, endDate } = req.body.periodo || {};
+        let { startDate, endDate } = req.body.periodo || {};
 
         if (!startDate || !endDate) {
             // Configura automaticamente para o período do mês atual
@@ -79,6 +79,9 @@ class MovementController {
                 startDate: firstDayOfMonth.toISOString(),
                 endDate: lastDayOfMonth.toISOString(),
             };
+
+            startDate = req.body.periodo.startDate;
+            endDate = req.body.periodo.endDate;
         } else {
             // Se pelo menos uma das datas não for nula, verifica e ajusta conforme necessário
             if (startDate) {
@@ -92,7 +95,7 @@ class MovementController {
 
         const dateFilter = {};
 
-        if (startDate && endDate) {
+        if ((startDate && endDate) || (!startDate && !endDate)) {
             dateFilter.data = {
                 [Op.between]: [new Date(startDate), new Date(endDate)],
             };
@@ -180,7 +183,6 @@ class MovementController {
     async update(req, res) {
         const schema = Yup.object().shape({
             name: Yup.string(),
-            description: Yup.string(),
             price: Yup.number(), // Ou Yup.number() se desejar validar como número
             data: Yup.date(),
             type_id: Yup.number(),
