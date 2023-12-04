@@ -3,7 +3,7 @@ module.exports = {
     port: process.env.DB_PORT || '5432',
     host: process.env.DB_HOST || 'localhost',
     username: process.env.DB_USERNAME || 'postgres',
-    password: process.env.DB_PASSWORD || 'postgresql',
+    password: process.env.DB_PASSWORD || 'postgres',
     database: process.env.DB_DATABASE || 'ommc-invest',
     dialectOptions: {
         // Defina ssl apenas se DB_SSL for true
