@@ -6,7 +6,7 @@ module.exports = {
             [
                 {
                     name: 'Administator',
-                    email: 'mendelbsi@gmail.com.br',
+                    email: 'mendelbsi@gmail.com.br2',
                     whatsapp: '62992111954',
                     password_hash:
                         '$2a$08$6cSNgbcNdX.QNC00JeT6tuWAUd8fjL81D6n3FI8pnGZz1a0e1nGB2',
