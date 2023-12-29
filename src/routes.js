@@ -50,6 +50,7 @@ routes.post('/movements/start/:type_id', MovementController.indexStartPeriod);
 
 // Resource de Patrimonios
 routes.get('/patrimonies', PatrimonyController.index);
+routes.get('/patrimonies/forMonth', PatrimonyController.forMonth);
 routes.post('/patrimonies', PatrimonyController.store);
 routes.post('/patrimonies/period', PatrimonyController.patrimonyForPeriod);
 routes.put('/patrimonies/desative/:id', PatrimonyController.desactive);

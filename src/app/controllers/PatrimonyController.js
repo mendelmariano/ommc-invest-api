@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable guard-for-in */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import * as Yup from 'yup';
 
@@ -192,36 +194,41 @@ class PatrimonyController {
             user_id: Yup.string().required(),
         });
 
-        if (!(await schema.isValid(req.body))) {
-            return res.status(400).json({ error: 'falha na validação' });
+        try {
+            if (!(await schema.isValid(req.body))) {
+                return res.status(400).json({ error: 'falha na validação' });
+            }
+
+            req.body.user_id = req.userId;
+
+            const { id } = await Patrimony.create(req.body);
+
+            const patrimonyCreated = await Patrimony.findOne({
+                include: [
+                    {
+                        model: Category,
+                        as: 'category', // Defina o alias corretamente aqui
+                        attributes: ['id', 'name'],
+                    },
+                    {
+                        model: Type,
+                        as: 'type', // Defina o alias corretamente aqui
+                        attributes: ['id', 'name'],
+                    },
+                    {
+                        model: User,
+                        as: 'user', // Defina o alias corretamente aqui
+                        attributes: ['id', 'name', 'email'],
+                    },
+                ],
+                where: { id },
+            });
+
+            return res.json(patrimonyCreated);
+        } catch (error) {
+            console.error('Error in store:', error);
+            return res.status(500).json({ error: 'Internal server error' });
         }
-
-        req.body.user_id = req.userId;
-
-        const { id } = await Patrimony.create(req.body);
-
-        const patrimonyCreated = await Patrimony.findOne({
-            include: [
-                {
-                    model: Category,
-                    as: 'category', // Defina o alias corretamente aqui
-                    attributes: ['id', 'name'],
-                },
-                {
-                    model: Type,
-                    as: 'type', // Defina o alias corretamente aqui
-                    attributes: ['id', 'name'],
-                },
-                {
-                    model: User,
-                    as: 'user', // Defina o alias corretamente aqui
-                    attributes: ['id', 'name', 'email'],
-                },
-            ],
-            where: { id },
-        });
-
-        return res.json(patrimonyCreated);
     }
 
     async update(req, res) {
@@ -357,6 +364,108 @@ class PatrimonyController {
 
         await patrimony.update({ status: 0, data: new Date() });
         return res.status(200).send();
+    }
+
+    async forMonth(req, res) {
+        try {
+            const patrimonys = await Patrimony.findAll({
+                include: [
+                    {
+                        model: Category,
+                        as: 'category',
+                        attributes: ['id', 'name'],
+                    },
+                    {
+                        model: Type,
+                        as: 'type',
+                        attributes: ['id', 'name'],
+                    },
+                    {
+                        model: User,
+                        as: 'user',
+                        attributes: ['id', 'name', 'email'],
+                    },
+                ],
+                where: { user_id: req.userId },
+                order: [['data', 'ASC']],
+            });
+
+            // Agrupar os patrimônios por mês
+            const patrimonysByMonth = {};
+            const allPatrimonies = [];
+
+            patrimonys.forEach((patrimony) => {
+                const monthYear = patrimony.data.toISOString().slice(0, 7); // Formato YYYY-MM
+                if (!patrimonysByMonth[monthYear]) {
+                    patrimonysByMonth[monthYear] = [];
+                    if (allPatrimonies.length > 0) {
+                        patrimonysByMonth[monthYear].push(...allPatrimonies);
+                    }
+                }
+
+                patrimonysByMonth[monthYear].push(patrimony);
+                allPatrimonies.push(patrimony);
+            });
+
+            const result = {};
+
+            // eslint-disable-next-line no-restricted-syntax
+            for (const month in patrimonysByMonth) {
+                const patrimonies = patrimonysByMonth[month];
+                const filteredPatrimonies = [];
+
+                // Criar um objeto auxiliar para rastrear os patrimônios por nome
+                const patrimoniesByName = {};
+
+                // Filtrar os patrimônios por nome mais recente com status igual a 1
+                // eslint-disable-next-line no-restricted-syntax
+                for (const patrimony of patrimonies) {
+                    if (patrimony.status === 1) {
+                        // Se ainda não houver patrimônio com esse nome ou o patrimônio atual é mais recente
+                        if (
+                            !patrimoniesByName[patrimony.name] ||
+                            patrimony.updatedAt >
+                                patrimoniesByName[patrimony.name].updatedAt
+                        ) {
+                            // Atualizar o patrimônio no objeto auxiliar
+                            patrimoniesByName[patrimony.name] = patrimony;
+                        }
+                    }
+                }
+
+                // Adicionar os patrimônios filtrados ao resultado
+                // eslint-disable-next-line no-restricted-syntax, guard-for-in
+                for (const name in patrimoniesByName) {
+                    filteredPatrimonies.push(patrimoniesByName[name]);
+                }
+
+                // Adicionar ao resultado final
+                result[month] = filteredPatrimonies;
+            }
+
+            const resultadoSomado = {};
+
+            for (const mes in result) {
+                const patrimonios = result[mes];
+
+                // Inicializar o total para o mês
+                let totalPorMes = 0;
+
+                // Somar os valores dos patrimônios para o mês
+                for (const patrimonio of patrimonios) {
+                    // Converter o preço para um número e somar ao total
+                    totalPorMes += parseFloat(patrimonio.price);
+                }
+
+                // Armazenar o total no resultado
+                resultadoSomado[mes] = totalPorMes.toFixed(2); // Arredondar para 2 casas decimais
+            }
+
+            return res.json(resultadoSomado);
+        } catch (error) {
+            console.error('Error in forMonth method:', error);
+            return res.status(500).json({ error: 'Internal server error' });
+        }
     }
 }
 
