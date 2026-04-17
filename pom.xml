@@ -9,9 +9,9 @@
         <relativePath/>
     </parent>
     <groupId>com.ommcinvest</groupId>
-    <artifactId>api</artifactId>
+    <artifactId>ommc-invest-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>api</name>
+    <name>ommc-invest-api</name>
     <description>API for OMMC Invest</description>
     <properties>
         <java.version>11</java.version>
