@@ -1,0 +1,274 @@
+# API Routes Documentation
+# Base URL: http://localhost:8085
+# All routes except /auth/* require JWT token in Authorization header: Bearer <token>
+
+## Authentication Endpoints
+
+### POST /auth/signup
+- Description: Register a new user
+- Request Body (UserDTO):
+  {
+    "name": "string (required)",
+    "email": "string (required)",
+    "whatsapp": "string",
+    "passwordHash": "string (required)"
+  }
+- Response (201 Created):
+  {
+    "token": "string",
+    "type": "Bearer",
+    "userId": "UUID",
+    "userName": "string",
+    "userEmail": "string",
+    "profileId": "integer"
+  }
+- Error (409 Conflict): "Email already registered"
+
+### POST /auth/login
+- Description: Login user
+- Request Body (LoginRequestDTO):
+  {
+    "email": "string (required)",
+    "password": "string (required)"
+  }
+- Response (200 OK):
+  {
+    "token": "string",
+    "type": "Bearer",
+    "userId": "UUID",
+    "userName": "string",
+    "userEmail": "string",
+    "profileId": "integer"
+  }
+
+## User Management
+
+### GET /users?page=0&size=10
+- Description: Get paginated list of users
+- Response: Page<UserDTO>
+
+### GET /users/{id}
+- Description: Get user by ID
+- Path Param: id (UUID)
+- Response: UserDTO
+
+### POST /users
+- Description: Create new user
+- Request Body: UserDTO
+- Response: UserDTO
+
+### PUT /users/{id}
+- Description: Update user
+- Path Param: id (UUID)
+- Request Body: UserDTO
+- Response: UserDTO
+
+### DELETE /users/{id}
+- Description: Delete user
+- Path Param: id (UUID)
+- Response: 204 No Content
+
+## Categories
+
+### GET /categories?page=0&size=10
+- Description: Get paginated list of categories
+- Response: Page<CategoryDTO>
+
+### GET /categories/{id}
+- Description: Get category by ID
+- Path Param: id (integer)
+- Response: CategoryDTO
+
+### POST /categories
+- Description: Create new category
+- Request Body: CategoryDTO
+- Response: CategoryDTO
+
+### PUT /categories/{id}
+- Description: Update category
+- Path Param: id (integer)
+- Request Body: CategoryDTO
+- Response: CategoryDTO
+
+### DELETE /categories/{id}
+- Description: Delete category
+- Path Param: id (integer)
+- Response: 204 No Content
+
+## Movements
+
+### GET /movements?page=0&size=10
+- Description: Get paginated list of movements
+- Response: Page<MovementDTO>
+
+### GET /movements/{id}
+- Description: Get movement by ID
+- Path Param: id (UUID)
+- Response: MovementDTO
+
+### POST /movements
+- Description: Create new movement
+- Request Body: MovementDTO
+- Response: MovementDTO
+
+### PUT /movements/{id}
+- Description: Update movement
+- Path Param: id (UUID)
+- Request Body: MovementDTO
+- Response: MovementDTO
+
+### DELETE /movements/{id}
+- Description: Delete movement
+- Path Param: id (UUID)
+- Response: 204 No Content
+
+## Patrimonies
+
+### GET /patrimonies?page=0&size=10
+- Description: Get paginated list of patrimonies
+- Response: Page<PatrimonyDTO>
+
+### GET /patrimonies/{id}
+- Description: Get patrimony by ID
+- Path Param: id (integer)
+- Response: PatrimonyDTO
+
+### POST /patrimonies
+- Description: Create new patrimony
+- Request Body: PatrimonyDTO
+- Response: PatrimonyDTO
+
+### PUT /patrimonies/{id}
+- Description: Update patrimony
+- Path Param: id (integer)
+- Request Body: PatrimonyDTO
+- Response: PatrimonyDTO
+
+### DELETE /patrimonies/{id}
+- Description: Delete patrimony
+- Path Param: id (integer)
+- Response: 204 No Content
+
+## Profiles
+
+### GET /profiles?page=0&size=10
+- Description: Get paginated list of profiles
+- Response: Page<ProfileDTO>
+
+### GET /profiles/{id}
+- Description: Get profile by ID
+- Path Param: id (integer)
+- Response: ProfileDTO
+
+### POST /profiles
+- Description: Create new profile
+- Request Body: ProfileDTO
+- Response: ProfileDTO
+
+### PUT /profiles/{id}
+- Description: Update profile
+- Path Param: id (integer)
+- Request Body: ProfileDTO
+- Response: ProfileDTO
+
+### DELETE /profiles/{id}
+- Description: Delete profile
+- Path Param: id (integer)
+- Response: 204 No Content
+
+## Types
+
+### GET /types?page=0&size=10
+- Description: Get paginated list of types
+- Response: Page<TypeDTO>
+
+### GET /types/{id}
+- Description: Get type by ID
+- Path Param: id (integer)
+- Response: TypeDTO
+
+### POST /types
+- Description: Create new type
+- Request Body: TypeDTO
+- Response: TypeDTO
+
+### PUT /types/{id}
+- Description: Update type
+- Path Param: id (integer)
+- Request Body: TypeDTO
+- Response: TypeDTO
+
+### DELETE /types/{id}
+- Description: Delete type
+- Path Param: id (integer)
+- Response: 204 No Content
+
+## DTO Structures
+
+### UserDTO
+{
+  "id": "UUID",
+  "uuid": "string",
+  "name": "string (required)",
+  "whatsapp": "string",
+  "email": "string (required)",
+  "passwordHash": "string",
+  "profileId": "integer",
+  "createdAt": "LocalDateTime",
+  "updatedAt": "LocalDateTime"
+}
+
+### CategoryDTO
+{
+  "id": "integer",
+  "name": "string",
+  "typeId": "integer",
+  "createdAt": "LocalDateTime",
+  "updatedAt": "LocalDateTime"
+}
+
+### MovementDTO
+{
+  "id": "UUID",
+  "userId": "UUID",
+  "categoryId": "integer",
+  "typeId": "integer",
+  "description": "string",
+  "amount": "decimal",
+  "date": "LocalDate",
+  "createdAt": "LocalDateTime",
+  "updatedAt": "LocalDateTime"
+}
+
+### PatrimonyDTO
+{
+  "id": "integer",
+  "userId": "UUID",
+  "name": "string",
+  "value": "decimal",
+  "createdAt": "LocalDateTime",
+  "updatedAt": "LocalDateTime"
+}
+
+### ProfileDTO
+{
+  "id": "integer",
+  "name": "string",
+  "createdAt": "LocalDateTime",
+  "updatedAt": "LocalDateTime"
+}
+
+### TypeDTO
+{
+  "id": "integer",
+  "name": "string",
+  "createdAt": "LocalDateTime",
+  "updatedAt": "LocalDateTime"
+}
+
+## Notes
+- All protected routes require Authorization header: Bearer <token>
+- Pagination uses ?page=0&size=10
+- Dates are in ISO format
+- UUIDs for user and movement IDs
+- Integers for category, patrimony, profile, type IDs
