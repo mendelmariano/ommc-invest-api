@@ -1,0 +1,70 @@
+﻿{
+    "name":  "User",
+    "source":  "C:\\Projetos\\Cursos\\Ommc-invest\\api\\src\\main\\java\\com\\ommcinvest\\api\\entity\\User.java",
+    "fields":  [
+                   {
+                       "javaType":  "UUID",
+                       "name":  "id",
+                       "type":  {
+                                    "type":  "object",
+                                    "javaType":  "UUID"
+                                }
+                   },
+                   {
+                       "javaType":  "String",
+                       "name":  "uuid",
+                       "type":  {
+                                    "type":  "string"
+                                }
+                   },
+                   {
+                       "javaType":  "String",
+                       "name":  "name",
+                       "type":  {
+                                    "type":  "string"
+                                }
+                   },
+                   {
+                       "javaType":  "String",
+                       "name":  "whatsapp",
+                       "type":  {
+                                    "type":  "string"
+                                }
+                   },
+                   {
+                       "javaType":  "String",
+                       "name":  "email",
+                       "type":  {
+                                    "type":  "string"
+                                }
+                   },
+                   {
+                       "javaType":  "String",
+                       "name":  "passwordHash",
+                       "type":  {
+                                    "type":  "string"
+                                }
+                   },
+                   {
+                       "javaType":  "Integer",
+                       "name":  "profileId",
+                       "type":  {
+                                    "type":  "integer"
+                                }
+                   },
+                   {
+                       "javaType":  "LocalDateTime",
+                       "name":  "createdAt",
+                       "type":  {
+                                    "type":  "string"
+                                }
+                   },
+                   {
+                       "javaType":  "LocalDateTime",
+                       "name":  "updatedAt",
+                       "type":  {
+                                    "type":  "string"
+                                }
+                   }
+               ]
+}

@@ -1,0 +1,34 @@
+﻿{
+    "name":  "Profile",
+    "source":  "C:\\Projetos\\Cursos\\Ommc-invest\\api\\src\\main\\java\\com\\ommcinvest\\api\\entity\\Profile.java",
+    "fields":  [
+                   {
+                       "javaType":  "Integer",
+                       "name":  "id",
+                       "type":  {
+                                    "type":  "integer"
+                                }
+                   },
+                   {
+                       "javaType":  "String",
+                       "name":  "name",
+                       "type":  {
+                                    "type":  "string"
+                                }
+                   },
+                   {
+                       "javaType":  "LocalDateTime",
+                       "name":  "createdAt",
+                       "type":  {
+                                    "type":  "string"
+                                }
+                   },
+                   {
+                       "javaType":  "LocalDateTime",
+                       "name":  "updatedAt",
+                       "type":  {
+                                    "type":  "string"
+                                }
+                   }
+               ]
+}

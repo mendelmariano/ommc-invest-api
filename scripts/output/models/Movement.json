@@ -1,0 +1,79 @@
+﻿{
+    "name":  "Movement",
+    "source":  "C:\\Projetos\\Cursos\\Ommc-invest\\api\\src\\main\\java\\com\\ommcinvest\\api\\entity\\Movement.java",
+    "fields":  [
+                   {
+                       "javaType":  "UUID",
+                       "name":  "id",
+                       "type":  {
+                                    "type":  "object",
+                                    "javaType":  "UUID"
+                                }
+                   },
+                   {
+                       "javaType":  "String",
+                       "name":  "name",
+                       "type":  {
+                                    "type":  "string"
+                                }
+                   },
+                   {
+                       "javaType":  "String",
+                       "name":  "description",
+                       "type":  {
+                                    "type":  "string"
+                                }
+                   },
+                   {
+                       "javaType":  "LocalDateTime",
+                       "name":  "data",
+                       "type":  {
+                                    "type":  "string"
+                                }
+                   },
+                   {
+                       "javaType":  "Integer",
+                       "name":  "typeId",
+                       "type":  {
+                                    "type":  "integer"
+                                }
+                   },
+                   {
+                       "javaType":  "BigDecimal",
+                       "name":  "price",
+                       "type":  {
+                                    "type":  "object",
+                                    "javaType":  "BigDecimal"
+                                }
+                   },
+                   {
+                       "javaType":  "Integer",
+                       "name":  "categoryId",
+                       "type":  {
+                                    "type":  "integer"
+                                }
+                   },
+                   {
+                       "javaType":  "UUID",
+                       "name":  "userId",
+                       "type":  {
+                                    "type":  "object",
+                                    "javaType":  "UUID"
+                                }
+                   },
+                   {
+                       "javaType":  "LocalDateTime",
+                       "name":  "createdAt",
+                       "type":  {
+                                    "type":  "string"
+                                }
+                   },
+                   {
+                       "javaType":  "LocalDateTime",
+                       "name":  "updatedAt",
+                       "type":  {
+                                    "type":  "string"
+                                }
+                   }
+               ]
+}

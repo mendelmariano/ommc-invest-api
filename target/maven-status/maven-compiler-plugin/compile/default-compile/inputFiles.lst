@@ -7,8 +7,10 @@ C:\Projetos\Cursos\Ommc-invest\api\src\main\java\com\ommcinvest\api\dto\Category
 C:\Projetos\Cursos\Ommc-invest\api\src\main\java\com\ommcinvest\api\controller\TypeController.java
 C:\Projetos\Cursos\Ommc-invest\api\src\main\java\com\ommcinvest\api\service\PatrimonyService.java
 C:\Projetos\Cursos\Ommc-invest\api\src\main\java\com\ommcinvest\api\controller\ProfileController.java
+C:\Projetos\Cursos\Ommc-invest\api\src\main\java\com\ommcinvest\api\dto\PriceDataUpdateDTO.java
 C:\Projetos\Cursos\Ommc-invest\api\src\main\java\com\ommcinvest\api\repository\UserRepository.java
 C:\Projetos\Cursos\Ommc-invest\api\src\main\java\com\ommcinvest\api\repository\CategoryRepository.java
+C:\Projetos\Cursos\Ommc-invest\api\src\main\java\com\ommcinvest\api\dto\MonthlyPatrimonyTotalDTO.java
 C:\Projetos\Cursos\Ommc-invest\api\src\main\java\com\ommcinvest\api\dto\PatrimonyDTO.java
 C:\Projetos\Cursos\Ommc-invest\api\src\main\java\com\ommcinvest\api\dto\UserDTO.java
 C:\Projetos\Cursos\Ommc-invest\api\src\main\java\com\ommcinvest\api\entity\Type.java
@@ -28,6 +30,7 @@ C:\Projetos\Cursos\Ommc-invest\api\src\main\java\com\ommcinvest\api\repository\P
 C:\Projetos\Cursos\Ommc-invest\api\src\main\java\com\ommcinvest\api\exception\GlobalExceptionHandler.java
 C:\Projetos\Cursos\Ommc-invest\api\src\main\java\com\ommcinvest\api\service\CategoryService.java
 C:\Projetos\Cursos\Ommc-invest\api\src\main\java\com\ommcinvest\api\controller\CategoryController.java
+C:\Projetos\Cursos\Ommc-invest\api\src\main\java\com\ommcinvest\api\security\CorsConfig.java
 C:\Projetos\Cursos\Ommc-invest\api\src\main\java\com\ommcinvest\api\controller\PatrimonyController.java
 C:\Projetos\Cursos\Ommc-invest\api\src\main\java\com\ommcinvest\api\entity\Category.java
 C:\Projetos\Cursos\Ommc-invest\api\src\main\java\com\ommcinvest\api\entity\Movement.java

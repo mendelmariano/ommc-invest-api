@@ -41,6 +41,37 @@ public class MovementController {
         return ResponseEntity.ok(toDTO(saved));
     }
 
+    @PostMapping("/receitas")
+    public ResponseEntity<MovementDTO> createReceita(@Valid @RequestBody MovementDTO dto) {
+        Movement movement = toEntity(dto);
+        Movement saved = service.saveReceita(movement);
+        return ResponseEntity.ok(toDTO(saved));
+    }
+
+    @GetMapping("/receitasPaginated")
+    public ResponseEntity<Page<MovementDTO>> buscarReceitas(@RequestParam(defaultValue = "0") int page,
+                                                           @RequestParam(defaultValue = "10") int size,
+                                                           @RequestParam(required = false) String start,
+                                                           @RequestParam(required = false) String end) {
+        Pageable pageable = PageRequest.of(page, size);
+        System.out.println("Start: " + start);
+        System.out.println("End: " + end);
+
+        Page<Movement> movements = service.buscarReceitasPorPeriodo(pageable, start, end);
+        return ResponseEntity.ok(movements.map(this::toDTO));
+    }
+
+    @GetMapping("/despesasPaginated")
+    public ResponseEntity<Page<MovementDTO>> buscarDespesas(@RequestParam(defaultValue = "0") int page,
+                                                           @RequestParam(defaultValue = "10") int size,
+                                                           @RequestParam(required = false) String start,
+                                                           @RequestParam(required = false) String end) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<Movement> movements = service.buscarDespesasPorPeriodo(pageable, start, end);
+        return ResponseEntity.ok(movements.map(this::toDTO));
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<MovementDTO> update(@PathVariable UUID id, @Valid @RequestBody MovementDTO dto) {
         Movement movement = toEntity(dto);
@@ -72,4 +103,5 @@ public class MovementController {
         movement.setUpdatedAt(dto.getUpdatedAt());
         return movement;
     }
+    
 }

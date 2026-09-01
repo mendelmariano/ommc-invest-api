@@ -1,5 +1,6 @@
 package com.ommcinvest.api.controller;
 
+import com.ommcinvest.api.dto.MonthlyPatrimonyTotalDTO;
 import com.ommcinvest.api.dto.PatrimonyDTO;
 import com.ommcinvest.api.entity.Patrimony;
 import com.ommcinvest.api.service.PatrimonyService;
@@ -9,6 +10,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
 
 import javax.validation.Valid;
 
@@ -25,6 +31,64 @@ public class PatrimonyController {
         Pageable pageable = PageRequest.of(page, size);
         Page<Patrimony> patrimonies = service.findAll(pageable);
         return patrimonies.map(this::toDTO);
+    }
+
+    @GetMapping("/forUser/{userId}/untilDate")
+    public List<Patrimony> getActiveTotalByUserIdAndUntilDate(
+            @PathVariable UUID userId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam int year,
+            @RequestParam int month
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+
+       return service.findByUserIdMonth(userId, month, year, pageable).getContent();
+    }
+
+    @GetMapping("/forUser/{userId}")
+    public Page<PatrimonyDTO> getByUserId(
+            @PathVariable UUID userId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam int month,
+            @RequestParam int year
+    ) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        System.out.println("Fetching patrimonies for userId: " + userId + ", year: " + year + ", month: " + month);
+        Page<Patrimony> patrimonies =
+                service.findByUserIdMonth(userId, month, year, pageable);
+
+        return patrimonies.map(this::toDTO);
+    }
+
+    @GetMapping("/forUser/{userId}/latest-by-month")
+    public ResponseEntity<BigDecimal> getLatestByUserIdAndMonth(
+            @PathVariable UUID userId,
+            @RequestParam int year,
+            @RequestParam int month
+    ) {
+        BigDecimal patrimonies = service.getActiveTotalByUserIdAndMonth(userId, year, month);
+        return ResponseEntity.ok(patrimonies);
+    }
+
+    @GetMapping("/forUser/{userId}/total")
+    public ResponseEntity<BigDecimal> getActiveTotalByUserIdAndMonth(
+            @PathVariable UUID userId,
+            @RequestParam int year,
+            @RequestParam int month
+    ) {
+        System.out.println("Calculating total for userId: " + userId + ", year: " + year + ", month: " + month);
+        BigDecimal total = service.findActivePatrimonyTotalByUserIdAndYearAndMonth(userId, year, month);
+        return ResponseEntity.ok(total);
+    }
+
+    @GetMapping("/forUser/{userId}/totals-by-month")
+    public List<MonthlyPatrimonyTotalDTO> getActiveTotalsByUserIdGroupedByMonth(
+            @PathVariable UUID userId
+    ) {
+        return service.getActiveTotalsByUserIdGroupedByMonth(userId);
     }
 
     @GetMapping("/{id}")
@@ -44,6 +108,18 @@ public class PatrimonyController {
     public ResponseEntity<PatrimonyDTO> update(@PathVariable Integer id, @Valid @RequestBody PatrimonyDTO dto) {
         Patrimony patrimony = toEntity(dto);
         Patrimony updated = service.update(id, patrimony);
+        return ResponseEntity.ok(toDTO(updated));
+    }
+
+    @PutMapping("/{id}/price-date")
+    public ResponseEntity<PatrimonyDTO> updatePriceAndDate(@PathVariable Integer id, @Valid @RequestBody com.ommcinvest.api.dto.PriceDataUpdateDTO dto) {
+        Patrimony updated = service.updatePriceAndData(id, dto.getPrice(), dto.getData());
+        return ResponseEntity.ok(toDTO(updated));
+    }
+
+    @PostMapping("/{id}/resgatar")
+    public ResponseEntity<PatrimonyDTO> resgatar(@PathVariable Integer id) {
+        Patrimony updated = service.resgatar(id);
         return ResponseEntity.ok(toDTO(updated));
     }
 
@@ -68,8 +144,6 @@ public class PatrimonyController {
         patrimony.setCategoryId(dto.getCategoryId());
         patrimony.setUserId(dto.getUserId());
         patrimony.setStatus(dto.getStatus());
-        patrimony.setCreatedAt(dto.getCreatedAt());
-        patrimony.setUpdatedAt(dto.getUpdatedAt());
         return patrimony;
     }
 }

@@ -1,6 +1,8 @@
 com\ommcinvest\api\entity\Profile.class
 com\ommcinvest\api\controller\CategoryController.class
 com\ommcinvest\api\repository\PatrimonyRepository.class
+com\ommcinvest\api\dto\PriceDataUpdateDTO.class
+com\ommcinvest\api\security\CorsConfig.class
 com\ommcinvest\api\dto\LoginRequestDTO.class
 com\ommcinvest\api\entity\Movement.class
 com\ommcinvest\api\service\MovementService.class
@@ -9,6 +11,7 @@ com\ommcinvest\api\controller\TypeController.class
 com\ommcinvest\api\dto\LoginResponseDTO.class
 com\ommcinvest\api\exception\GlobalExceptionHandler.class
 com\ommcinvest\api\service\JwtService.class
+com\ommcinvest\api\dto\MonthlyPatrimonyTotalDTO.class
 com\ommcinvest\api\repository\ProfileRepository.class
 com\ommcinvest\api\entity\User.class
 com\ommcinvest\api\dto\UserDTO.class
@@ -29,6 +32,7 @@ com\ommcinvest\api\service\PatrimonyService.class
 com\ommcinvest\api\ApiApplication.class
 com\ommcinvest\api\repository\TypeRepository.class
 com\ommcinvest\api\dto\CategoryDTO.class
+com\ommcinvest\api\security\SecurityConfig.class
 com\ommcinvest\api\repository\MovementRepository.class
 com\ommcinvest\api\service\ProfileService.class
 com\ommcinvest\api\entity\Category.class

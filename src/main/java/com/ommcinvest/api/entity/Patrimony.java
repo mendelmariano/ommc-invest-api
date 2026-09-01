@@ -21,7 +21,10 @@ public class Patrimony {
     private Integer categoryId;
     private UUID userId;
     private Integer status;
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     public Patrimony() {}
@@ -49,4 +52,15 @@ public class Patrimony {
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
     public LocalDateTime getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
 }

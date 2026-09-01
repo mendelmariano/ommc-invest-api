@@ -2,6 +2,7 @@ package com.ommcinvest.api.entity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -15,7 +16,7 @@ public class Movement {
 
     private String name;
     private String description;
-    private LocalDateTime data;
+    private LocalDate data;
     private Integer typeId;
     private BigDecimal price;
     private Integer categoryId;
@@ -32,8 +33,8 @@ public class Movement {
     public void setName(String name) { this.name = name; }
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
-    public LocalDateTime getData() { return data; }
-    public void setData(LocalDateTime data) { this.data = data; }
+    public LocalDate  getData() { return data; }
+    public void setData(LocalDate data) { this.data = data; }
     public Integer getTypeId() { return typeId; }
     public void setTypeId(Integer typeId) { this.typeId = typeId; }
     public BigDecimal getPrice() { return price; }
@@ -46,4 +47,16 @@ public class Movement {
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
     public LocalDateTime getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+@PreUpdate
+    public void preUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
 }

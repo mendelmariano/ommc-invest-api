@@ -3,6 +3,7 @@ package com.ommcinvest.api.dto;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -12,7 +13,7 @@ public class MovementDTO {
     @NotBlank(message = "Name is required")
     private String name;
     private String description;
-    private LocalDateTime data;
+    private LocalDate data;
     private Integer typeId;
     @NotNull(message = "Price is required")
     private BigDecimal price;
@@ -23,7 +24,7 @@ public class MovementDTO {
 
     public MovementDTO() {}
 
-    public MovementDTO(UUID id, String name, String description, LocalDateTime data, Integer typeId, BigDecimal price, Integer categoryId, UUID userId, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public MovementDTO(UUID id, String name, String description, LocalDate data, Integer typeId, BigDecimal price, Integer categoryId, UUID userId, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -43,8 +44,8 @@ public class MovementDTO {
     public void setName(String name) { this.name = name; }
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
-    public LocalDateTime getData() { return data; }
-    public void setData(LocalDateTime data) { this.data = data; }
+    public LocalDate  getData() { return data; }
+    public void setData(LocalDate data) { this.data = data; }
     public Integer getTypeId() { return typeId; }
     public void setTypeId(Integer typeId) { this.typeId = typeId; }
     public BigDecimal getPrice() { return price; }
