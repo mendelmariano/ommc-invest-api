@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.ommcinvest</groupId>
     <artifactId>ommc-invest-api</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>ommc-invest-api</name>
     <description>API for OMMC Invest</description>
     <properties>
